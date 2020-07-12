@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import ImageCreateForm
 from .models import Image
 from common.decorators import ajax_required
+from actions.utils import create_action
 
 
 @login_required
@@ -23,6 +24,7 @@ def image_create(request):
             # assign current user to the item
             new_item.user = request.user
             new_item.save()
+            create_action(request.user, 'bookmarked image', new_item)
             messages.success(request, 'Image added successfully')
 
             # redirect to new created item detail view

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'social_django',
     'images.apps.ImagesConfig',
     'sorl.thumbnail',
+    'actions.apps.ActionsConfig',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +149,8 @@ SOCIAL_AUTH_TWITTER_SECRET = ''
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail',
+                                        args=[u.username])
+}
